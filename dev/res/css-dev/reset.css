@@ -1,0 +1,29 @@
+/* CSS Baseline */
+body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, acronym, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, form, fieldset, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, applet, object, iframe, article, aside, figure, figcaption, footer, header, hgroup, menu, nav, section, time, mark, video, audio, canvas {
+	padding: 0;
+	border: none; 
+	margin: 0;
+}
+
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: "";
+	content: none;
+}
+
+table {
+	border-spacing: 0; 
+	border-collapse: collapse;
+}
+
+caption, th, td {
+	font-weight: normal;
+	text-align: left;
+	vertical-align: middle;
+}
+
+article, aside, figure, figcaption, footer, header, hgroup, nav, section {
+	display: block;
+}
