@@ -14,6 +14,9 @@ var TITLE							= "MailX",									// Title
 		CSS_FILENAME			= "styles",									// Production CSS Filename
 		BUILD							= "build";									// Project Build
 		LETTER						= "letter"									// Final Letter
+		RECIPIENT					= "uncle.funkay@gmail.com"
+		MAILGUN_KEY				= "key-07720bdc9221f9578a518fdd6a14a6b6"
+		MAILGUN_SENDER		= "postmaster@sandbox1d3a0f4a935145739d6ae7f76347c5e4.mailgun.org"
 
 function fillAnArray(ARRAY, PATH) {
 	var RESULT = [];
@@ -53,7 +56,12 @@ module.exports = function(grunt) {
 				dir: BUILD + "/"
 			};
 			this.letter = {
-				dir: LETTER + "/"
+				dir: LETTER + "/",
+				recipient: RECIPIENT,
+				mailgun: {
+					key: MAILGUN_KEY,
+					sender: MAILGUN_SENDER
+				}
 			}
 			return this;
 		}
@@ -133,16 +141,9 @@ module.exports = function(grunt) {
 				expand: true
 			}
 		},
-
-		mailgun: {
-			mailTest: {
-				options: {
-					key: "key-07720bdc9221f9578a518fdd6a14a6b6",
-					sender: "postmaster@sandbox1d3a0f4a935145739d6ae7f76347c5e4.mailgun.org",
-					recipient: "uncle.funkay@gmail.com",
-					subject: "Test"
-				},
-				src: [project.letter.dir + "*.html"]
+		colorguard: {
+			files: {
+				src: project.res.css.devDir + "*.css"
 			}
 		},
 
@@ -207,7 +208,7 @@ module.exports = function(grunt) {
 					}]
 				},
 				files: {
-					"./": [project.res.css.dir + "*.css"],
+					"./": [project.res.css.dir + "*.css"]
 				}
 			},
 			commentsSecond: {
@@ -221,7 +222,7 @@ module.exports = function(grunt) {
 					}]
 				},
 				files: {
-					"./": [project.res.css.dir + "*.css"],
+					"./": [project.res.css.dir + "*.css"]
 				}
 			},
 			build: {
@@ -235,7 +236,7 @@ module.exports = function(grunt) {
 					}]
 				},
 				files: {
-					"./": [project.build.dir + "*.html"],
+					"./": [project.build.dir + "*.html"]
 				}
 			},
 			letter: {
@@ -261,11 +262,26 @@ module.exports = function(grunt) {
 					}]
 				},
 				files: {
-					"./": [project.letter.dir + "*.html"],
+					"./": [project.letter.dir + "*.html"]
 				}
 			}
 		},
 
+		uncss: {
+			cssOptimize: {
+				options: {
+					ignore: [/(.)*-is-(.)*/, /(.)*-has-(.)*/, /(.)*-are-(.)*/],
+					stylesheets: [project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".css"]
+				},
+				files: {
+					cssMinFiles: function() {
+						var cssMinFilesObject = {};
+						cssMinFilesObject[project.res.css.dir + project.res.css.filename + ".css"] = project.dir + "*.html";
+						return cssMinFilesObject;
+					}
+				}.cssMinFiles()
+			}
+		},
 		csscomb: {
 			options: {
 				config: "csscombConfig.json"
@@ -292,21 +308,6 @@ module.exports = function(grunt) {
 				expand: true
 			}
 		},
-		uncss: {
-			cssOptimize: {
-				options: {
-					ignore: [/(.)*-is-(.)*/, /(.)*-has-(.)*/, /(.)*-are-(.)*/],
-					stylesheets: [project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".css"]
-				},
-				files: {
-					cssMinFiles: function() {
-						var cssMinFilesObject = {};
-						cssMinFilesObject[project.res.css.dir + project.res.css.filename + ".css"] = project.dir + "*.html";
-						return cssMinFilesObject;
-					}
-				}.cssMinFiles()
-			}
-		},
 
 		processhtml: {
 			options: {
@@ -322,7 +323,6 @@ module.exports = function(grunt) {
 				expand: true
 			}
 		},
-
 		htmlmin: {
 			cleanup: {
 				options: {
@@ -356,26 +356,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		clean: {
-			res: [project.res.css.dir],
-			build: [project.build.dir, project.letter.dir],
-		},
-		copy: {
-			build: {
-				cwd: project.dir,
-				src: ["**/*.*", "!**/tx-*.*", "!**/templates/**", "!**/**-dev/**", "!**/tx/**"],
-				dest: project.build.dir,
-				expand: true
-			},
-			letter: {
-				cwd: project.build.dir,
-				src: ["**/*.*", "!**/*.html", "!**/*.css"],
-				dest: project.letter.dir,
-				expand: true,
-				flatten: true
-			}
-		},
-
 		imagemin: {
 			images: {
 				cwd: project.dir,
@@ -405,6 +385,106 @@ module.exports = function(grunt) {
 			}
 		},
 
+		mailgun: {
+			mailTest: {
+				options: {
+					key: project.letter.mailgun.key,
+					sender: project.letter.mailgun.sender,
+					recipient: project.letter.recipient,
+					subject: "Test MailX"
+				},
+				cwd: project.letter.dir,
+				src: ["*.html"],
+				expand: true
+			}
+		},
+		litmus: {
+			options: {
+				username: "",
+				password: "",
+				url: "",
+				clients: [
+					"android22",
+					"android4",
+					"aolonline",
+					"androidgmailapp",
+					"ffaolonline",
+					"chromeaolonline",
+					"appmail6",
+					"blackberry8900",
+					"blackberryhtml",
+					"colorblind",
+					"messagelabs",
+					"iphone5s",
+					"ipadmini",
+					"postini",
+					"ipad",
+					"barracuda",
+					"outlookfilter",
+					"spamassassin3",
+					"gmailnewspam",
+					"yahoospam",
+					"aolonlinespam",
+					"gmailnew",
+					"ffgmailnew",
+					"chromegmailnew",
+					"iphone4",
+					"iphone5",
+					"notes6",
+					"notes7",
+					"notes8",
+					"notes85",
+					"ol2000",
+					"ol2002",
+					"ol2003",
+					"ol2007",
+					"ol2010",
+					"ol2011",
+					"ol2013",
+					"outlookcom",
+					"ffoutlookcom",
+					"chromeoutlookcom",
+					"plaintext",
+					"thunderbirdlatest",
+					"yahoo",
+					"ffyahoo",
+					"chromeyahoo",
+					"spfcheck",
+					"dkimcheck",
+					"DomainKeys",
+					"dkcheck",
+					"senderidcheck",
+					"gmxspam",
+					"mailcomspam",
+					"windowsphone8"
+				]
+			},
+			mailTest: {
+				cwd: project.letter.dir,
+				src: ["*.html"],
+				expand: true
+			}
+		},
+
+		clean: {
+			res: [project.res.css.dir],
+			build: [project.build.dir, project.letter.dir],
+		},
+		copy: {
+			build: {
+				cwd: project.dir,
+				src: ["**/*.*", "!**/tx-*.*", "!**/templates/**", "!**/**-dev/**", "!**/tx/**"],
+				dest: project.build.dir,
+				expand: true
+			},
+			letter: {
+				cwd: project.build.dir,
+				src: ["**/*.*", "!**/*.html", "!**/*.css"],
+				dest: project.letter.dir,
+				expand: true,
+				flatten: true
+			}
+		},
 		compress: {
 			letter: {
 				options: {
@@ -500,7 +580,7 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask("lint", ["htmlhint", "csslint"]);
+	grunt.registerTask("quality", ["htmlhint", "csslint", "colorguard"]);
 
 	grunt.registerTask("test", ["mailgun"]);
 
