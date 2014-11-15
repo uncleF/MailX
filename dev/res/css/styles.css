@@ -1,1 +1,41 @@
-body{padding:0;border:0;margin:0;}
+/* CSS Baseline */
+
+body, table, tbody, tr, td {
+	padding: 0;
+	border: none;
+	margin: 0;
+}
+
+body {
+	width: 100% !important;
+	min-width: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+table, td {
+	text-align: left;
+	vertical-align: top;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+td {
+	border-collapse: collapse !important;
+	font-weight: normal;
+	word-break: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
+/* Layout Base */
+
+center {
+	width: 100%;
+	min-width: 580px;
+}

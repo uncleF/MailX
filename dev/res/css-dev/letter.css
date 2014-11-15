@@ -1,2 +1,16 @@
+/* Typography */
+img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	outline: none;
+	text-decoration: none;
+	-ms-interpolation-mode: bicubic;
+}
+
 /* Layout Base */
+center {
+	width: 100%;
+	min-width: 580px;
+}
 /*# sourceMappingURL=letter.css.map */

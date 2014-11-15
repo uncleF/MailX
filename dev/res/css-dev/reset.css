@@ -5,6 +5,13 @@ body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, a
 	margin: 0;
 }
 
+body {
+	width: 100% !important;
+	min-width: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
 blockquote, q {
 	quotes: none;
 }
@@ -13,18 +20,51 @@ blockquote:before, blockquote:after, q:before, q:after {
 	content: none;
 }
 
+table, th, td {
+	text-align: left; 
+	vertical-align: top;
+
+	-premailer-width: 100%;
+	-premailer-cellpadding: 0;
+	-premailer-cellspacing: 0;
+}
+
 table {
 	border-spacing: 0; 
 	border-collapse: collapse;
 }
 
 caption, th, td {
+	border-collapse: collapse !important; 
 	font-weight: normal;
-	text-align: left;
-	vertical-align: middle;
+	word-break: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
 }
 
 article, aside, figure, figcaption, footer, header, hgroup, nav, section {
 	display: block;
+}
+
+/* Client-specific Reset */
+#outlook a {
+	padding: 0;
+}
+
+.ExternalClass {
+	width: 100%;
+	line-height: 100%;
+}
+.ExternalClass div, .ExternalClass span, .ExternalClass p, .ExternalClass font, .ExternalClass td {
+	line-height: 100%;
+}
+
+#backgroundTable {
+	width: 100% !important;
+	padding: 0;
+	margin: 0;
+	line-height: 100% !important;
 }
 /*# sourceMappingURL=reset.css.map */

@@ -3,5 +3,6 @@
 	"removeCommentsFromCDATA": true,
 	"collapseBooleanAttributes": true,
 	"removeRedundantAttributes": true,
-	"removeEmptyAttributes": true
+	"removeEmptyAttributes": true,
+	"keepClosingSlash": true
 }

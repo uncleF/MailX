@@ -9,7 +9,6 @@ var TITLE							= "MailX",									// Title
 		TEMPLATES_DIR			= "templates",							// Templates
 		CSS_TEMPLATE			= "_head.html",							// Template Containing CSS Declarations
 		CSS_IMAGES_DIR		= "images",									// Image Resources
-		DATA_URI					= [],												// List of Images (Relative to the Image Resources Directory) to Convert to DataURI
 		CSS_DIR						= "css",										// Production CSS
 		SASS_DIR					= "sass-dev",								// Sass
 		CSS_DEV_DIR				= "css-dev",								// Generated CSS
@@ -39,8 +38,7 @@ module.exports = function(grunt) {
 			this.res = {
 				dir: RESOURCES_DIR,
 				images: {
-					dir: RESOURCES_DIR + CSS_IMAGES_DIR + "/",
-					dataURI: fillAnArray(DATA_URI, RESOURCES_DIR + CSS_IMAGES_DIR + "/")
+					dir: RESOURCES_DIR + CSS_IMAGES_DIR + "/"
 				},
 				css: {
 					dir: RESOURCES_DIR_COMPILED + CSS_DIR + "/",
@@ -117,13 +115,6 @@ module.exports = function(grunt) {
 		},
 
 		concat: {
-			datauri: {
-				options: {
-					separator: "\n\n"
-				},
-				src: [project.res.css.sass + "tx/_tx-projectImages-base64.scss", project.res.css.sass + "tx/_tx-projectImages-IE.scss"],
-				dest: project.res.css.sass + "tx/_tx-projectImages.scss"
-			},
 			css: {
 				src: "<%= TASK.CSS_ARRAY %>",
 				dest: project.res.css.dir + project.res.css.filename + ".css"
@@ -162,6 +153,9 @@ module.exports = function(grunt) {
 					},{
 						pattern: /\/\*(.)*(\r?\n|\r){4}/g,
 						replacement: ""
+					},{
+						pattern: /\/\*(.)*(\r?\n|\r){4}/g,
+						replacement: ""
 					}]
 				},
 				files: {
@@ -175,7 +169,7 @@ module.exports = function(grunt) {
 						replacement: project.title + " Template"
 					},{
 						pattern: /.!-- @tx-css -->(.|\t|\s|\r?\n|\r)*?!-- \/@tx-css -->/gi,
-						replacement: "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".css\">"
+						replacement: "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".min.css\">"
 					}]
 				},
 				files: {
@@ -202,10 +196,24 @@ module.exports = function(grunt) {
 					},{
 						pattern: /url\([.\S]*\//gi,
 						replacement: "url("
+					},{
+						pattern: /-premailer(.*?);/g,
+						replacement: ""
 					}]
 				},
 				files: {
 					"./": [project.letter.dir + "*.html"]
+				}
+			},
+			premailer: {
+				options: {
+					replacements: [{
+						pattern: /(\r?\n|\r)*(\t)*-premailer(.*?)(;|\r?\n|\r)/g,
+						replacement: ""
+					}]
+				},
+				files: {
+					"./": [project.build.dir + "**/*.css", project.res.css.dir + "*.css"]
 				}
 			}
 		},
@@ -213,7 +221,6 @@ module.exports = function(grunt) {
 		uncss: {
 			cssOptimize: {
 				options: {
-					ignore: [/(.)*-is-(.)*/, /(.)*-has-(.)*/, /(.)*-are-(.)*/],
 					stylesheets: [project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".css"]
 				},
 				files: {
@@ -243,14 +250,25 @@ module.exports = function(grunt) {
 			}
 		},
 		cssc: {
-			options: {
-				consolidateViaSelectors: false
-			},
 			cssOptimize: {
 				cwd: project.res.css.dir,
 				src: ["*.css"],
 				dest: project.res.css.dir,
-				ext: ".css",
+				ext: ".min.css",
+				expand: true
+			}
+		},
+		cssmin: {
+			cssMin: {
+				cwd: project.res.css.dir,
+				src: ["*.min.css"],
+				dest: project.res.css.dir,
+				expand: true
+			},
+			svg: {
+				cwd: project.dir,
+				src: ["**/*.svg"],
+				dest: project.dir,
 				expand: true
 			}
 		},
@@ -296,15 +314,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		datauri: {
-			options: {
-				classPrefix: "image-"
-			},
-			resImages: {
-				src: project.res.images.dataURI,
-				dest: project.res.css.sass + "tx/_tx-projectImages-base64.scss"
-			}
-		},
 		imagemin: {
 			images: {
 				cwd: project.dir,
@@ -428,12 +437,6 @@ module.exports = function(grunt) {
 
 	});
 
-	grunt.registerTask("datauri-cleanup", "Cleanup After datauri-fallback", function() {
-		if (grunt.file.isFile(project.res.css.sass + "tx/_tx-projectImages-base64.scss")) {
-			grunt.file.delete(project.res.css.sass + "tx/_tx-projectImages-base64.scss");
-		}
-	});
-
 	grunt.registerTask("process-css", "CSS processing", function() {
 		var CSS_DIR_REGEX = new RegExp("<link(.)*href=\"" + project.res.css.devDir.replace(project.dir, ""), "g"),
 				CSS_ALL = grunt.file.read(project.templates.css)
@@ -444,8 +447,8 @@ module.exports = function(grunt) {
 					.replace(/<!--(.|\t|\s|\r?\n|\r)*/, "")
 					.replace(CSS_DIR_REGEX, "")
 					.replace(/\r?\n|\r/g, "")
-					.replace(/">$/, ""),
-				CSS_ARRAY = CSS.split("\">"),
+					.replace(/" \/>$/, ""),
+				CSS_ARRAY = CSS.split("\" />"),
 				CSS_EXPECTED = CSS_ARRAY.length,
 				CSS_ACTUAL = grunt.file.expand([project.res.css.devDir + "*.css"]).length;
 		if (CSS_EXPECTED === CSS_ACTUAL || (CSS_ARRAY[0] === "" && CSS_ACTUAL === 0)) {
@@ -455,7 +458,7 @@ module.exports = function(grunt) {
 				var PROCESS_TASKS = [];
 				PROCESS_TASKS.push("concat:css");
 				grunt.config.set("TASK.CSS_ARRAY", fillAnArray(CSS_ARRAY, project.res.css.devDir));
-				PROCESS_TASKS = PROCESS_TASKS.concat(["uncss", "string-replace:commentsFirst", "string-replace:commentsSecond", "csscomb", "cssc"]);
+				PROCESS_TASKS = PROCESS_TASKS.concat(["uncss", "string-replace:commentsFirst", "string-replace:commentsSecond", "csscomb", "cssc", "cssmin:cssMin"]);
 				grunt.task.run(PROCESS_TASKS);
 			}
 		} else {
@@ -473,9 +476,9 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("test", ["mailgun"]);
 
-	grunt.registerTask("images-datauri", ["datauri", "concat:datauri", "datauri-cleanup"]);
+	grunt.registerTask("process-svg", ["svgmin", "cssmin:svg"]);
 
-	grunt.registerTask("images", ["imagemin", "images-datauri", "svgmin"]);
+	grunt.registerTask("images", ["imagemin", "process-svg"]);
 
 	grunt.registerTask("generate-css", ["sass", "autoprefixer"]);
 
@@ -483,6 +486,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("compile", ["clean:res", "processhtml", "generate-css", "process-css"]);
 
-	grunt.registerTask("build", ["compile", "clean:build", "copy:build", "string-replace:build", "htmlmin:cleanup", "premailer", "htmlmin:letterClenup", "string-replace:letter", "copy:letter", "compress:letter"]);
+	grunt.registerTask("build", ["compile", "clean:build", "copy:build", "string-replace:build", "htmlmin:cleanup", "premailer", "htmlmin:letterClenup", "string-replace:letter", "copy:letter", "string-replace:premailer", "compress:letter"]);
 
 };

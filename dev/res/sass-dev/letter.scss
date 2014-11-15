@@ -8,4 +8,22 @@
 
 
 
+/* Typography */
+
+img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	text-decoration: none;
+	outline: none;
+	-ms-interpolation-mode: bicubic;
+}
+
+
+
 /* Layout Base */
+
+center {
+	width: 100%;
+	min-width: 580px;
+}
