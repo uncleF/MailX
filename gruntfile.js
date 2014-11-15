@@ -1,22 +1,19 @@
-//Gruntfile for the MailX Project
+//Gruntfile for the MailX Template
 
 var TITLE							= "MailX",									// Title
-		DEVELOPMENT				= "dev",										// Development Directory
-		IMAGES						= "images",									// Images
-		TEMPLATES					= "templates",							// Templates
+		BUILD_DIR					= "build",									// Template Build
+		LETTER_DIR				= "letter",									// Letter Template
+		DEVELOPMENT_DIR		= "dev",										// Template Directory
+		IMAGES_DIR				= "images",									// Images
+		RESOURCES_DIR			= "res",										// Resources (CSS, Images)
+		TEMPLATES_DIR			= "templates",							// Templates
 		CSS_TEMPLATE			= "_head.html",							// Template Containing CSS Declarations
-		RESOURCES					= "res",										// Project Resources
-		IMAGE_RESOURCES		= "images",									// Image Resources
+		CSS_IMAGES_DIR		= "images",									// Image Resources
 		DATA_URI					= [],												// List of Images (Relative to the Image Resources Directory) to Convert to DataURI
-		SASS							= "sass-dev",								// Sass
-		CSS_DEV						= "css-dev",								// Generated CSS
-		CSS								= "css",										// Production CSS
-		CSS_FILENAME			= "styles",									// Production CSS Filename
-		BUILD							= "build";									// Project Build
-		LETTER						= "letter"									// Final Letter
-		RECIPIENT					= "uncle.funkay@gmail.com"
-		MAILGUN_KEY				= "key-07720bdc9221f9578a518fdd6a14a6b6"
-		MAILGUN_SENDER		= "postmaster@sandbox1d3a0f4a935145739d6ae7f76347c5e4.mailgun.org"
+		CSS_DIR						= "css",										// Production CSS
+		SASS_DIR					= "sass-dev",								// Sass
+		CSS_DEV_DIR				= "css-dev",								// Generated CSS
+		CSS_FILENAME			= "styles";									// Production CSS Filename
 
 function fillAnArray(ARRAY, PATH) {
 	var RESULT = [];
@@ -31,38 +28,33 @@ module.exports = function(grunt) {
 	var project = {
 		init: function() {
 			this.title = TITLE;
-			this.dir = DEVELOPMENT + "/";
-			this.images = this.dir + IMAGES + "/";
-			var TEMPLATES_DIR = this.dir + TEMPLATES + "/",
-					RESOURCES_DIR = this.dir + RESOURCES + "/";
+			this.dir = DEVELOPMENT_DIR + "/";
+			this.images = this.dir + IMAGES_DIR + "/";
+			var TEMPLATES_DIR_COMPILED = this.dir + TEMPLATES_DIR + "/",
+					RESOURCES_DIR_COMPILED = this.dir + RESOURCES_DIR + "/";
 			this.templates = {
-				dir: TEMPLATES_DIR,
-				css: TEMPLATES_DIR + CSS_TEMPLATE
+				dir: TEMPLATES_DIR_COMPILED,
+				css: TEMPLATES_DIR_COMPILED + CSS_TEMPLATE
 			};
 			this.res = {
 				dir: RESOURCES_DIR,
 				images: {
-					dir: RESOURCES_DIR + IMAGE_RESOURCES + "/",
-					dataURI: fillAnArray(DATA_URI, RESOURCES_DIR + IMAGE_RESOURCES + "/")
+					dir: RESOURCES_DIR + CSS_IMAGES_DIR + "/",
+					dataURI: fillAnArray(DATA_URI, RESOURCES_DIR + CSS_IMAGES_DIR + "/")
 				},
 				css: {
-					dir: RESOURCES_DIR + CSS + "/",
-					devDir: RESOURCES_DIR + CSS_DEV + "/",
-					sass: RESOURCES_DIR + SASS + "/",
+					dir: RESOURCES_DIR_COMPILED + CSS_DIR + "/",
+					devDir: RESOURCES_DIR_COMPILED + CSS_DEV_DIR + "/",
+					sass: RESOURCES_DIR_COMPILED + SASS_DIR + "/",
 					filename: CSS_FILENAME
 				}
 			};
 			this.build = {
-				dir: BUILD + "/"
+				dir: BUILD_DIR + "/"
 			};
 			this.letter = {
-				dir: LETTER + "/",
-				recipient: RECIPIENT,
-				mailgun: {
-					key: MAILGUN_KEY,
-					sender: MAILGUN_SENDER
-				}
-			}
+				dir: LETTER_DIR + "/",
+			};
 			return this;
 		}
 	}.init();
@@ -70,30 +62,10 @@ module.exports = function(grunt) {
 	require("load-grunt-tasks")(grunt);
 
 	grunt.initConfig({
-		
-		datauri: {
-			options: {
-				classPrefix: "image-"
-			},
-			resImages: {
-				src: project.res.images.dataURI,
-				dest: project.res.css.sass + "tx/_tx-projectImages-base64.scss"
-			}
-		},
 
 		htmlhint: {
 			options: {
-				"tagname-lowercase": true,
-				"attr-lowercase": true,
-				"attr-value-double-quotes": true,
-				"doctype-first": true,
-				"tag-pair": true,
-				"spec-char-escape": true,
-				"id-unique": true,
-				"src-not-empty": true,
-				"id-class-value": true,
-				"style-disabled": true,
-				"img-alt-require": true
+				"htmlhintrc": ".htmlhintrc"
 			},
 			htmlHint: {
 				cwd: project.dir,
@@ -102,41 +74,11 @@ module.exports = function(grunt) {
 			}
 		},
 		csslint: {
-			options: {
-				"adjoining-classes": false,
-				"box-model": false,
-				"box-sizing": false,
-				"compatible-vendor-prefixes": false,
-				"display-property-grouping": true,
-				"duplicate-background-images": false,
-				"duplicate-properties": true,
-				"empty-rules": true,
-				"errors": true,
-				"fallback-colors": true,
-				"floats": "warning",
-				"font-faces": "warning",
-				"font-sizes": "warning",
-				"gradients": "warning",
-				"ids": "warning",
-				"import": "warning",
-				"important": "warning",
-				"known-properties": true,
-				"outline-none": "warning",
-				"overqualified-elements": "warning",
-				"qualified-headings": "warning",
-				"regex-selectors": "warning",
-				"rules-count": "warning",
-				"shorthand": "warning",
-				"star-property-hack": "warning",
-				"text-indent": "warning",
-				"underscore-property-hack": "warning",
-				"unique-headings": false,
-				"universal-selector": "warning",
-				"vendor-prefix": true,
-				"zero-units": false
+			option: {
+				"csslintrc": ".csslintrc"
 			},
 			cssLint: {
-				cwd: project.res.css.dir,
+				cwd: project.res.css.devDir,
 				src: ["*.css"],
 				expand: true
 			}
@@ -162,12 +104,13 @@ module.exports = function(grunt) {
 		},
 		autoprefixer: {
 			options: {
+				map: true,
 				browsers: ["> 1%", "last 2 versions", "Firefox ESR", "Opera 12.1", "Explorer >= 7"],
 				cascade: false
 			},
 			prefixCSS: {
 				cwd: project.res.css.devDir,
-				src: ["**/*.css", "!**/*-IE.css"],
+				src: ["**/*.css"],
 				dest: project.res.css.devDir,
 				expand: true
 			}
@@ -229,10 +172,10 @@ module.exports = function(grunt) {
 				options: {
 					replacements: [{
 						pattern: /@tx-title/gi,
-						replacement: project.title
+						replacement: project.title + " Template"
 					},{
 						pattern: /.!-- @tx-css -->(.|\t|\s|\r?\n|\r)*?!-- \/@tx-css -->/gi,
-						replacement: '<link rel="stylesheet" type="text/css" href="' + project.res.css.dir.replace(project.dir, "") + project.res.css.filename + '.css">'
+						replacement: "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + project.res.css.dir.replace(project.dir, "") + project.res.css.filename + ".css\">"
 					}]
 				},
 				files: {
@@ -284,7 +227,7 @@ module.exports = function(grunt) {
 		},
 		csscomb: {
 			options: {
-				config: "csscombConfig.json"
+				config: ".csscombrc"
 			},
 			cssSortBuild: {
 				cwd: project.res.css.dir,
@@ -300,6 +243,9 @@ module.exports = function(grunt) {
 			}
 		},
 		cssc: {
+			options: {
+				consolidateViaSelectors: false
+			},
 			cssOptimize: {
 				cwd: project.res.css.dir,
 				src: ["*.css"],
@@ -324,14 +270,8 @@ module.exports = function(grunt) {
 			}
 		},
 		htmlmin: {
+			options: grunt.file.readJSON(".htmlminrc"),
 			cleanup: {
-				options: {
-					removeComments: true,
-					removeCommentsFromCDATA: true,
-					collapseBooleanAttributes: true,
-					removeRedundantAttributes: true,
-					removeEmptyAttributes: true
-				},
 				cwd: project.build.dir,
 				src: ["*.html"],
 				dest: project.build.dir,
@@ -356,10 +296,27 @@ module.exports = function(grunt) {
 			}
 		},
 
+		datauri: {
+			options: {
+				classPrefix: "image-"
+			},
+			resImages: {
+				src: project.res.images.dataURI,
+				dest: project.res.css.sass + "tx/_tx-projectImages-base64.scss"
+			}
+		},
 		imagemin: {
 			images: {
 				cwd: project.dir,
 				src: ["**/*.{png,jpg,gif}", "!**/tx-*.*", "!tx/*.*"],
+				dest: project.dir,
+				expand: true
+			}
+		},
+		svgmin: {
+			svg: {
+				cwd: project.dir,
+				src: ["**/*.svg"],
 				dest: project.dir,
 				expand: true
 			}
@@ -376,22 +333,14 @@ module.exports = function(grunt) {
 				expand: true
 			}
 		},
-		svgmin: {
-			svg: {
-				cwd: project.dir,
-				src: ["**/*.svg"],
-				dest: project.dir,
-				expand: true
-			}
-		},
 
 		mailgun: {
 			mailTest: {
 				options: {
-					key: project.letter.mailgun.key,
-					sender: project.letter.mailgun.sender,
-					recipient: project.letter.recipient,
-					subject: "Test MailX"
+					key: grunt.file.readJSON(process.env.buildJSON).mailgun.key,
+					sender: grunt.file.readJSON(process.env.buildJSON).mailgun.sender,
+					recipient: grunt.file.readJSON(process.env.buildJSON).mailgun.recipient,
+					subject: "Test MailX Tempalte"
 				},
 				cwd: project.letter.dir,
 				src: ["*.html"],
@@ -400,64 +349,10 @@ module.exports = function(grunt) {
 		},
 		litmus: {
 			options: {
-				username: "",
-				password: "",
-				url: "",
-				clients: [
-					"android22",
-					"android4",
-					"aolonline",
-					"androidgmailapp",
-					"ffaolonline",
-					"chromeaolonline",
-					"appmail6",
-					"blackberry8900",
-					"blackberryhtml",
-					"colorblind",
-					"messagelabs",
-					"iphone5s",
-					"ipadmini",
-					"postini",
-					"ipad",
-					"barracuda",
-					"outlookfilter",
-					"spamassassin3",
-					"gmailnewspam",
-					"yahoospam",
-					"aolonlinespam",
-					"gmailnew",
-					"ffgmailnew",
-					"chromegmailnew",
-					"iphone4",
-					"iphone5",
-					"notes6",
-					"notes7",
-					"notes8",
-					"notes85",
-					"ol2000",
-					"ol2002",
-					"ol2003",
-					"ol2007",
-					"ol2010",
-					"ol2011",
-					"ol2013",
-					"outlookcom",
-					"ffoutlookcom",
-					"chromeoutlookcom",
-					"plaintext",
-					"thunderbirdlatest",
-					"yahoo",
-					"ffyahoo",
-					"chromeyahoo",
-					"spfcheck",
-					"dkimcheck",
-					"DomainKeys",
-					"dkcheck",
-					"senderidcheck",
-					"gmxspam",
-					"mailcomspam",
-					"windowsphone8"
-				]
+				username: grunt.file.readJSON(process.env.buildJSON).litmus.username,
+				password: grunt.file.readJSON(process.env.buildJSON).litmus.password,
+				url: grunt.file.readJSON(process.env.buildJSON).litmus.url,
+				clients: grunt.file.readJSON(".litmusrc").clients
 			},
 			mailTest: {
 				cwd: project.letter.dir,
@@ -483,18 +378,6 @@ module.exports = function(grunt) {
 				dest: project.letter.dir,
 				expand: true,
 				flatten: true
-			}
-		},
-		compress: {
-			letter: {
-				options: {
-					mode: "zip",
-					archive: project.title + ".template.zip"
-				},
-				cwd: project.letter.dir,
-				src: ["**"],
-				dest: ".",
-				expand: true
 			}
 		},
 
@@ -528,6 +411,19 @@ module.exports = function(grunt) {
 				limit: 5
 			},
 			projectWatch: ["watch:htmlTemplates", "watch:sassStyles", "watch:sassPartials", "watch:sassImages", "watch:livereloadWatch"]
+		},
+
+		compress: {
+			letter: {
+				options: {
+					mode: "zip",
+					archive: project.title + ".template.zip"
+				},
+				cwd: project.letter.dir,
+				src: ["**"],
+				dest: ".",
+				expand: true
+			}
 		}
 
 	});
@@ -540,7 +436,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("process-css", "CSS processing", function() {
 		var CSS_DIR_REGEX = new RegExp("<link(.)*href=\"" + project.res.css.devDir.replace(project.dir, ""), "g"),
-				CSS_IE_DIR_REGEX = new RegExp("<!--(.)*href=\"" + project.res.css.devDir.replace(project.dir, ""), "g"),
 				CSS_ALL = grunt.file.read(project.templates.css)
 					.replace(/(.|\t|\s|\r?\n|\r)*?<!-- @tx-css -->/, "")
 					.replace(/<!-- \/@tx-css -->(.|\t|\s|\r?\n|\r)*/, "")
@@ -550,13 +445,7 @@ module.exports = function(grunt) {
 					.replace(CSS_DIR_REGEX, "")
 					.replace(/\r?\n|\r/g, "")
 					.replace(/">$/, ""),
-				CSS_IE = CSS_ALL
-					.replace(/^<link(.)*/gm, "")
-					.replace(CSS_IE_DIR_REGEX, "")
-					.replace(/\r?\n|\r/g, "")
-					.replace(/"> <\!\[endif\]-->$/, ""),
 				CSS_ARRAY = CSS.split("\">"),
-				CSS_IE_ARRAY = CSS_IE.split("\"> <![endif]-->"),
 				CSS_EXPECTED = CSS_ARRAY.length,
 				CSS_ACTUAL = grunt.file.expand([project.res.css.devDir + "*.css"]).length;
 		if (CSS_EXPECTED === CSS_ACTUAL || (CSS_ARRAY[0] === "" && CSS_ACTUAL === 0)) {

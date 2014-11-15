@@ -1,7 +1,1 @@
-{
-  "version": 3,
-  "file": "letter.css",
-  "sources": ["..\/sass-dev\/letter.scss","..\/sass-dev\/tx\/_tx.scss","..\/sass-dev\/tx\/_tx-project.scss","..\/sass-dev\/tx\/_tx-projectImages.scss"],
-  "names": [],
-  "mappings": ""
-}
+{"version":3,"sources":["letter.css"],"names":[],"mappings":"AAAA,kBAAiB","file":"letter.css"}
