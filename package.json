@@ -25,9 +25,8 @@
 		"grunt-litmus": "*",
 		"grunt-contrib-clean": "*",
 		"grunt-contrib-copy": "*",
+		"grunt-contrib-compress": "*",
 		"grunt-contrib-watch": "*",
-		"grunt-concurrent": "*",
-		"grunt-newer": "*",
-		"grunt-contrib-compress": "*"
+		"grunt-concurrent": "*"
 	}
 }

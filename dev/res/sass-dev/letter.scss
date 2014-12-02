@@ -10,6 +10,26 @@
 
 /* Typography */
 
+body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, acronym, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, form, fieldset, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, applet, object, iframe, article, aside, figure, figcaption, footer, header, hgroup, menu, nav, section, time, mark, video, audio, canvas {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+article, aside, figure, figcaption, footer, header, hgroup, nav, section {
+	display: block;
+}
+
+blockquote, q {
+	quotes: none;
+
+	&:before, &:after {
+		content: "";
+		content: none;
+	}
+
+}
+
 img {
 	display: block;
 	width: auto;
@@ -19,11 +39,67 @@ img {
 	-ms-interpolation-mode: bicubic;
 }
 
+caption, th, td {
+	@include tx-hyphens(auto);
+	font-weight: normal;
+	word-break: break-word;
+	border-collapse: collapse !important;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	-premailer-width: 100%;
+	-premailer-cellpadding: 0;
+	-premailer-cellspacing: 0;
+}
+
+th {
+	font-weight: bold;
+	text-align: left;
+}
+
 
 
 /* Layout Base */
 
+body {
+	@include tx-font-adjustment(false);
+	width: 100% !important; 
+	min-width: 100%;
+}
+
 center {
 	width: 100%;
 	min-width: 580px;
+}
+
+
+
+/* Client-specific Reset */
+
+#outlook {
+
+	a {
+		padding:0;		
+	}
+
+}
+
+.ExternalClass {
+	width: 100%;
+	line-height: 100%;
+
+	div, span, p, font, td {
+		line-height: 100%;
+	}
+
+} 
+
+#backgroundTable { 
+	width: 100% !important;
+	margin: 0;
+	padding: 0;
+	line-height: 100% !important;
 }

@@ -1,26 +1,9 @@
-/* CSS Baseline */
+/* Typography */
 
 body, table, tbody, tr, td {
 	padding: 0;
 	border: none;
 	margin: 0;
-}
-
-body {
-	width: 100% !important;
-	min-width: 100%;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-}
-
-table, td {
-	text-align: left;
-	vertical-align: top;
-}
-
-table {
-	border-spacing: 0;
-	border-collapse: collapse;
 }
 
 td {
@@ -30,10 +13,24 @@ td {
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
 	-ms-hyphens: auto;
+	-o-hyphens: auto;
 	hyphens: auto;
 }
 
+table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
 /* Layout Base */
+
+body {
+	width: 100% !important;
+	min-width: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
 
 center {
 	width: 100%;

@@ -391,17 +391,16 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
+			options: {
+				spawn: false
+			},
 			htmlTemplates: {
 				files: [project.templates.dir + "*.html"],
 				tasks: ["processhtml"]
 			},
-			sassStyles: {
-				files: [project.res.css.sass + "**/*.scss", project.res.css.sass + "**/*.sass", "!" + project.res.css.sass + "**/_*.scss", "!" + project.res.css.sass + "**/_*.sass"],
-				tasks: ["newer:sass", "newer:autoprefixer"]
-			},
-			sassPartials: {
-				files: [project.res.css.sass + "**/_*.scss", project.res.css.sass + "**/_*.sass"],
-				tasks: ["sass", "newer:autoprefixer"]
+			sass: {
+				files: [project.res.css.sass + "**/*.scss", project.res.css.sass + "**/*.sass"],
+				tasks: ["sass", "autoprefixer"]
 			},
 			sassImages: {
 				files: [project.res.images.dir + "**/*.{png,jpg,gif,svg}"],
@@ -417,9 +416,9 @@ module.exports = function(grunt) {
 		concurrent: {
 			options: {
 				logConcurrentOutput: true,
-				limit: 5
+				limit: 3
 			},
-			projectWatch: ["watch:htmlTemplates", "watch:sassStyles", "watch:sassPartials", "watch:sassImages", "watch:livereloadWatch"]
+			projectWatch: ["watch:htmlTemplates", "watch:sass", "watch:sassImages", "watch:livereloadWatch"]
 		},
 
 		compress: {
