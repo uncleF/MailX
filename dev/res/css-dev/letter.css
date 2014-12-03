@@ -1,22 +1,27 @@
 /* Typography */
+/* line 13, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, acronym, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, form, fieldset, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, applet, object, iframe, article, aside, figure, figcaption, footer, header, hgroup, menu, nav, section, time, mark, video, audio, canvas {
 	padding: 0;
 	border: none; 
 	margin: 0;
 }
 
+/* line 19, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 article, aside, figure, figcaption, footer, header, hgroup, nav, section {
 	display: block;
 }
 
+/* line 23, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 blockquote, q {
 	quotes: none;
 }
+/* line 26, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 blockquote:before, blockquote:after, q:before, q:after {
 	content: "";
 	content: none;
 }
 
+/* line 33, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 img {
 	display: block;
 	width: auto;
@@ -26,6 +31,7 @@ img {
 	-ms-interpolation-mode: bicubic;
 }
 
+/* line 42, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 caption, th, td {
 	border-collapse: collapse !important; 
 	font-weight: normal;
@@ -37,6 +43,7 @@ caption, th, td {
 	hyphens: auto;
 }
 
+/* line 49, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 table {
 	width: 100%;
 	border-spacing: 0;
@@ -47,12 +54,14 @@ table {
 	-premailer-cellspacing: 0;
 }
 
+/* line 58, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 th {
 	font-weight: bold;
 	text-align: left;
 }
 
 /* Layout Base */
+/* line 67, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 body {
 	width: 100% !important;
 	min-width: 100%; 
@@ -60,24 +69,29 @@ body {
 	-ms-text-size-adjust: 100%;
 }
 
+/* line 73, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 center {
 	width: 100%;
 	min-width: 580px;
 }
 
 /* Client-specific Reset */
+/* line 84, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 #outlook a {
 	padding: 0;
 }
 
+/* line 90, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 .ExternalClass {
 	width: 100%;
 	line-height: 100%;
 }
+/* line 94, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 .ExternalClass div, .ExternalClass span, .ExternalClass p, .ExternalClass font, .ExternalClass td {
 	line-height: 100%;
 }
 
+/* line 100, /Users/uncleFucka/Projects/MailX/dev/res/sass-dev/letter.scss */
 #backgroundTable {
 	width: 100% !important;
 	padding: 0;
