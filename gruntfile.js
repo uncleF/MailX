@@ -483,7 +483,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("watch-project", ["concurrent"]);
 
-	grunt.registerTask("compile", ["clean:res", "processhtml", "generate-css", "process-css"]);
+	grunt.registerTask("compile", ["clean:res", "processhtml", "generate-css", "process-css", "images"]);
 
 	grunt.registerTask("build", ["compile", "clean:build", "copy:build", "string-replace:build", "htmlmin:cleanup", "premailer", "htmlmin:letterClenup", "string-replace:letter", "copy:letter", "string-replace:premailer", "compress:letter"]);
 
