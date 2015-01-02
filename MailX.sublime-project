@@ -14,34 +14,14 @@
 			"follow_symlinks": true,
 			"name": "MailX: Project",
 			"path": "."
-		},
-		{
+		}, {
 			"follow_symlinks": true,
 			"name": "MailX: HTML",
 			"path": "dev/templates"
-		},
-		{
+		}, {
 			"follow_symlinks": true,
 			"name": "MailX: Sass",
 			"path": "dev/res/sass-dev"
-		},
-		{
-			"follow_symlinks": true,
-			"name": "MailX: JavaScript",
-			"path": "dev/res/js-dev"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.jpg",
-				"*.gif",
-				"*.png",
-				"*.ico",
-				"*.svg"
-			],
-			"follow_symlinks": true,
-			"name": "MailX: Meta",
-			"path": "meta"
 		}
 	]
 }
