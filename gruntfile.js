@@ -122,7 +122,7 @@ module.exports = function(grunt) {
 		},
 
 		"string-replace": {
-			commentsFirst: {
+			cssComments: {
 				options: {
 					replacements: [{
 						pattern: /\/\* line \d*, .* \*\/(\r?\n|\r)*/g,
@@ -134,24 +134,16 @@ module.exports = function(grunt) {
 						pattern: /.media \-sass\-debug\-info(.|\t|\s|\r?\n|\r)*?\}\}/gi,
 						replacement: ""
 					},{
+						pattern: /\/\*\*\* uncss>.*\*\*\*\/(\r?\n|\r)*/g,
+						replacement: ""
+					},{
 						pattern: /\*\s(.)*\*\/(\r?\n|\r)*$/g,
 						replacement: ""
 					},{
 						pattern: /\*\s(.)*\*\/(\r?\n|\r)*\//g,
 						replacement: ""
-					}]
-				},
-				files: {
-					"./": [project.res.css.dir + "*.css"]
-				}
-			},
-			commentsSecond: {
-				options: {
-					replacements: [{
-						pattern: /(\r?\n|\r)*\/$/g,
-						replacement: ""
 					},{
-						pattern: /\/\*(.)*(\r?\n|\r){4}/g,
+						pattern: /(\r?\n|\r)*\/$/g,
 						replacement: ""
 					},{
 						pattern: /\/\*(.)*(\r?\n|\r){4}/g,
@@ -457,7 +449,7 @@ module.exports = function(grunt) {
 				var PROCESS_TASKS = [];
 				PROCESS_TASKS.push("concat:css");
 				grunt.config.set("TASK.CSS_ARRAY", fillAnArray(CSS_ARRAY, project.res.css.devDir));
-				PROCESS_TASKS = PROCESS_TASKS.concat(["uncss", "string-replace:commentsFirst", "string-replace:commentsSecond", "csscomb", "cssc", "cssmin:cssMin"]);
+				PROCESS_TASKS = PROCESS_TASKS.concat(["uncss", "csscomb", "string-replace:cssComments", "cssc", "cssmin:cssMin"]);
 				grunt.task.run(PROCESS_TASKS);
 			}
 		} else {
