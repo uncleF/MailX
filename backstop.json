@@ -1,0 +1,32 @@
+{
+  "viewports" : [
+    {
+      "name": "Phone",
+      "viewport": {
+        "width": 320,
+        "height": 480
+      }
+    },{
+      "name": "Tablet_Vertical_Orientation",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },{
+      "name": "Tablet_Horizontal_Orientation",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      }
+    }
+  ],
+  "grabConfigs": [
+    {
+      "testName": "MailX Index Page",
+      "url": "../../build/index.html",
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "selectors": ["body"]
+    }
+  ]
+}
