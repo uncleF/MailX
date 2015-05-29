@@ -14,11 +14,11 @@
       "follow_symlinks": true,
       "name": "MailX: Project",
       "path": "."
-    },{
+    }, {
       "follow_symlinks": true,
       "name": "MailX: HTML",
       "path": "dev/templates"
-    },{
+    }, {
       "follow_symlinks": true,
       "name": "MailX: Sass",
       "path": "dev/res/sass-dev"
