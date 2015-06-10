@@ -29,7 +29,7 @@ img {
 caption, th, td {
   border-collapse: collapse !important;
   font-weight: normal;
-  word-break: break-word; 
+  word-break: break-word;
   -webkit-hyphens: manual;
   -moz-hyphens: manual;
   -ms-hyphens: manual;

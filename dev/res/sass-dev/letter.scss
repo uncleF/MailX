@@ -9,53 +9,53 @@
 /* Typography */
 
 body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, acronym, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, form, fieldset, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, applet, object, iframe, article, aside, figure, figcaption, footer, header, hgroup, menu, nav, section, time, mark, video, audio, canvas {
-	padding: 0;
-	border: 0;
+  padding: 0;
+  border: 0;
   margin: 0;
 }
 
 article, aside, figure, figcaption, footer, header, hgroup, nav, section {
-	display: block;
+  display: block;
 }
 
 blockquote, q {
-	quotes: none;
+  quotes: none;
 
-	&:before, &:after {
-		content: "";
-		content: none;
-	}
+  &:before, &:after {
+    content: "";
+    content: none;
+  }
 
 }
 
 img {
-	display: block;
-	width: auto;
-	max-width: 100%;
-	text-decoration: none;
-	outline: none;
-	-ms-interpolation-mode: bicubic;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  outline: none;
+  text-decoration: none;
+  -ms-interpolation-mode: bicubic;
 }
 
 caption, th, td {
   border-collapse: collapse !important;
-	hyphens: manual;
-	font-weight: normal;
-	word-break: break-word;
+  font-weight: normal;
+  word-break: break-word;
+  hyphens: manual;
 }
 
 table {
-	width: 100%;
+  -premailer-width: 100%;
+  width: 100%;
   border-spacing: 0;
-	border-collapse: collapse;
-	-premailer-width: 100%;
-	-premailer-cellpadding: 0;
-	-premailer-cellspacing: 0;
+  border-collapse: collapse;
+  -premailer-cellpadding: 0;
+  -premailer-cellspacing: 0;
 }
 
 th {
-	font-weight: bold;
-	text-align: left;
+  font-weight: bold;
+  text-align: left;
 }
 
 
@@ -63,13 +63,13 @@ th {
 /* Layout Base */
 
 body {
-	width: 100% !important;
-	min-width: 100%;
+  width: 100% !important;
+  min-width: 100%;
 }
 
 center {
-	width: 100%;
-	min-width: 580px;
+  width: 100%;
+  min-width: 580px;
 }
 
 
@@ -78,25 +78,25 @@ center {
 
 #outlook {
 
-	a {
-		padding:0;
-	}
+  a {
+    padding: 0;
+  }
 
 }
 
 .ExternalClass {
-	width: 100%;
-	line-height: 100%;
+  width: 100%;
+  line-height: 100%;
 
-	div, span, p, font, td {
-		line-height: 100%;
-	}
+  div, span, p, font, td {
+    line-height: 100%;
+  }
 
 }
 
 #backgroundTable {
-	width: 100% !important;
-	padding: 0;
+  width: 100% !important;
+  padding: 0;
   margin: 0;
-	line-height: 100% !important;
+  line-height: 100% !important;
 }
