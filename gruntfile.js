@@ -71,9 +71,16 @@ module.exports = function(grunt) {
         expand: true
       }
     },
+    scsslint: {
+      scssLint: {
+        cwd: project.res.css.sass,
+        src: ['*.scss'],
+        expand: true
+      }
+    },
     csslint: {
-      option: {
-        'csslintrc': '.csslintrc'
+      options: {
+        csslintrc: '.csslintrc'
       },
       cssLint: {
         cwd: project.res.css.devDir,
@@ -482,7 +489,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('quality', ['htmlhint', 'csslint', 'colorguard']);
+  grunt.registerTask('quality', ['htmlhint', 'scsslint', 'csslint', 'colorguard']);
 
   grunt.registerTask('test', ['mailgun']);
 
