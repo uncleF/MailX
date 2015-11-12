@@ -1,19 +1,57 @@
-/* Typography */
+/* Baseline Styles, Typography & Rhythm */
 
-body, table, tbody, tr, td {
-  padding: 0;
-  border: 0;
-  margin: 0;
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  line-height: 24px;
+  line-height: 1.5rem;
 }
 
-td {
-  border-collapse: collapse !important;
-  font-weight: normal;
-  word-break: break-word;
+body {
+  color: #333333;
+  font-family: "Helvetica Neue", Helvetica, Calibri, Arial, sans-serif;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -epub-hyphens: manual;
   -webkit-hyphens: manual;
   -moz-hyphens: manual;
   -ms-hyphens: manual;
   hyphens: manual;
+}
+
+h1 {
+  font-weight: bold;
+  text-rendering: auto;
+  page-break-after: avoid;
+  break-after: avoid;
+  orphans: 3;
+  widows: 3;
+
+  -webkit-break-after: avoid;
+  -moz-break-after: avoid;
+}
+
+h1 {
+  margin: 24px 0 48px;
+  margin: 1.5rem 0 3rem;
+  font-size: 32px;
+  font-size: 2rem;
+  line-height: 72px;
+  line-height: 4.5rem;
+}
+
+table {
+  margin: 24px 0;
+  margin: 1.5rem 0;
+}
+
+td {
+  padding: 23px 15px 24px;
+  padding: 1.4375rem 15px 1.5rem;
+  border: 1px solid #cccccc;
 }
 
 table {
@@ -27,6 +65,7 @@ table {
 body {
   width: 100% !important;
   min-width: 100%;
+  margin: 0;
 }
 
 center {

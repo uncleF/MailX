@@ -139,33 +139,39 @@ module.exports = function(grunt) {
       cssComments: {
         options: {
           replacements: [{
-            pattern: /\/\* line \d*, .* \*\/(\r?\n|\r)*/g,
+            pattern: /\/\* line \d*, .* \*\/(?:\r?\n|\r)*/g,
             replacement: ''
-          },{
-            pattern: /\/\*# sourceMappingURL(.|\t|\s|\r?\n|\r)*?\*\//gi,
+          }, {
+            pattern: /\/\*# sourceMappingURL(?:.|\t|\s|\r?\n|\r)*?\*\//gi,
             replacement: ''
-          },{
-            pattern: /.media \-sass\-debug\-info(.|\t|\s|\r?\n|\r)*?\}\}/gi,
+          }, {
+            pattern: /.media \-sass\-debug\-info(?:.|\t|\s|\r?\n|\r)*?\}\}/gi,
             replacement: ''
-          },{
-            pattern: /\/\*\*\* uncss>.*\*\*\*\/(\r?\n|\r)*/g,
+          }, {
+            pattern: /\/\*\*\* uncss>.*\*\*\*\/(?:\r?\n|\r)*/g,
             replacement: ''
-          },{
-            pattern: /\*\s(.)*\*\/(\r?\n|\r)*$/g,
+          }, {
+            pattern: /\*\s(?:.)*\*\/(?:\r?\n|\r)*$/g,
             replacement: ''
-          },{
-            pattern: /\*\s(.)*\*\/(\r?\n\t*|\r\t*)*\//g,
+          }, {
+            pattern: /\*\s(?:.)*\*\/(?:\r?\n\t*|\r\t*)*\//g,
             replacement: ''
-          },{
-            pattern: /(\r?\n|\r)*\/$/g,
+          }, {
+            pattern: /(?:\r?\n|\r)*\/$/g,
             replacement: ''
-          },{
-            pattern: /\/\*(.)*(\r?\n|\r){4}/g,
+          }, {
+            pattern: /\/\*(?:.)*(?:\r?\n|\r){4}/g,
             replacement: ''
+          }, {
+            pattern: /\{(?:\r?\n|\r)\s*\/\*/g,
+            replacement: '{\n\n  /*'
+          }, {
+            pattern: /\}(?:\r?\n|\r)\}/g,
+            replacement: '}\n\n}'
           }]
         },
         files: {
-          './': [project.res.css.dir + '*.css']
+          './': [project.res.css.dir + '*.css', '!' + project.res.css.dir + '*.min.css']
         }
       },
       build: {
@@ -173,9 +179,15 @@ module.exports = function(grunt) {
           replacements: [{
             pattern: /@tx-title/gi,
             replacement: project.title + ' Template'
-          },{
+          }, {
             pattern: /.!-- @tx-css -->(.|\t|\s|\r?\n|\r)*?!-- \/@tx-css -->/gi,
             replacement: '<link rel="stylesheet" type="text/css" href="' + project.res.css.dir.replace(project.dir, '') + project.res.css.filename + '.min.css">'
+          }, {
+            pattern: /(?:\<span data-dev-note=".*?"\>)(.*)(?:\<\/span\>)/gi,
+            replacement: '$1'
+          }, {
+            pattern: /\sdata-dev-note=".*?"/gi,
+            replacement: ''
           }]
         },
         files: {
@@ -187,34 +199,34 @@ module.exports = function(grunt) {
           replacements: [{
             pattern: /\s+(\r?\n|\r)/g,
             replacement: '\n'
-          },{
+          }, {
             pattern: /(\r?\n|\r){3}/g,
             replacement: '\n'
-          },{
+          }, {
             pattern: /<style.*<\/style>/g,
             replacement: '<style type="text/css">' + grunt.file.read(project.res.css.dir + project.res.css.filename + '.min.css') + '</style>'
-          },{
+          }, {
             pattern: '</style></head><body',
             replacement: '</style>\n  </head>\n\n  <body'
-          },{
+          }, {
             pattern: '<style',
             replacement: '    <style'
-          },{
+          }, {
             pattern: '  <head>',
             replacement: '\n  <head>'
-          },{
+          }, {
             pattern: '<html',
             replacement: '\n<html'
-          },{
+          }, {
             pattern: '</html>',
             replacement: '\n</html>'
-          },{
+          }, {
             pattern: /src='[.\S]*\//gi,
             replacement: 'src="'
-          },{
+          }, {
             pattern: /url\([.\S]*\//gi,
             replacement: 'url('
-          },{
+          }, {
             pattern: /-premailer(.*?);/g,
             replacement: ''
           }]
@@ -341,6 +353,11 @@ module.exports = function(grunt) {
       }
     },
     svgmin: {
+      options: {
+        plugins: [
+          { removeViewBox: false }
+        ]
+      },
       svg: {
         cwd: project.dir,
         src: ['**/*.svg'],
@@ -408,6 +425,19 @@ module.exports = function(grunt) {
       }
     },
 
+    compress: {
+      letter: {
+        options: {
+          mode: 'zip',
+          archive: project.title + '.template.zip'
+        },
+        cwd: project.letter.dir,
+        src: ['**'],
+        dest: '.',
+        expand: true
+      }
+    },
+
     watch: {
       options: {
         spawn: false
@@ -437,19 +467,6 @@ module.exports = function(grunt) {
         limit: 4
       },
       projectWatch: ['watch:htmlTemplates', 'watch:sass', 'watch:sassImages', 'watch:livereloadWatch']
-    },
-
-    compress: {
-      letter: {
-        options: {
-          mode: 'zip',
-          archive: project.title + '.template.zip'
-        },
-        cwd: project.letter.dir,
-        src: ['**'],
-        dest: '.',
-        expand: true
-      }
     }
 
   });

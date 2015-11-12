@@ -1,61 +1,449 @@
-@import "project/project";
+@import 'project/project';
 
 
 
-// Layout
+// Letter
 
 
 
-/* Typography */
+/* Baseline Styles, Typography & Rhythm */
 
-body, div, span, h1, h2, h3, h4, h5, h6, p, address, blockquote, pre, a, abbr, acronym, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, form, fieldset, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, applet, object, iframe, article, aside, figure, figcaption, footer, header, hgroup, menu, nav, section, time, mark, video, audio, canvas {
-  padding: 0;
-  border: 0;
-  margin: 0;
+html {
+  @include tx-baseline;
+  text-size-adjust: 100%;
 }
 
-article, aside, canvas, figure, figcaption, footer, header, hgroup, nav, main, progress, section, summary {
+body {
+  @include tx-hyphens;
+  color: $text;
+  font-family: $font-sans;
+  font-feature-settings: 'liga';
+}
+
+%HTML5BlocksStyle {
   display: block;
 }
 
-blockquote, q {
+article {
+  @extend %HTML5BlocksStyle;
+}
+
+aside {
+  @extend %HTML5BlocksStyle;
+}
+
+canvas {
+  @extend %HTML5BlocksStyle;
+}
+
+figure {
+  @extend %HTML5BlocksStyle;
+}
+
+figcaption {
+  @extend %HTML5BlocksStyle;
+}
+
+footer {
+  @extend %HTML5BlocksStyle;
+}
+
+header {
+  @extend %HTML5BlocksStyle;
+}
+
+hgroup {
+  @extend %HTML5BlocksStyle;
+}
+
+nav {
+  @extend %HTML5BlocksStyle;
+}
+
+main {
+  @extend %HTML5BlocksStyle;
+}
+
+progress {
+  @extend %HTML5BlocksStyle;
+}
+
+section {
+  @extend %HTML5BlocksStyle;
+}
+
+summary {
+  @extend %HTML5BlocksStyle;
+}
+
+%headerStyle {
+  font-weight: bold;
+  text-rendering: auto;
+  page-break-after: avoid;
+  break-after: avoid;
+  orphans: 3;
+  widows: 3;
+}
+
+h1 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 2);
+  @include tx-font-size($h1-fontSize, 3);
+}
+
+h2 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 1);
+  @include tx-font-size($h2-fontSize, 2);
+}
+
+h3 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 1);
+  @include tx-font-size($h3-fontSize, 1);
+}
+
+h4 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 1);
+  @include tx-font-size($h4-fontSize, 1);
+}
+
+h5 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 1);
+  @include tx-font-size($h5-fontSize, 1);
+}
+
+h6 {
+  @extend %headerStyle;
+  @include tx-rhythm(1, 1);
+  @include tx-font-size($h6-fontSize, 1);
+}
+
+%marginStyle {
+  @include tx-rhythm(1, 1);
+}
+
+%monoStyle {
+  font-family: $font-mono;
+}
+
+p {
+  @extend %marginStyle;
+  @extend %hyphenStyle;
+}
+
+dl {
+  @extend %marginStyle;
+}
+
+dt {
+  @include tx-rhythm(1);
+  font-weight: bold;
+}
+
+dd {
+  @include tx-rhythm(0, 1, $mlft: 1.5em);
+  font-style: italic;
+}
+
+ul {
+  @extend %marginStyle;
+  list-style-type: disc;
+}
+
+ol {
+  @extend %marginStyle;
+  list-style-type: decimal;
+}
+
+%nestedListsStyle {
+  @include tx-rhythm(1, 1, $mlft: 1.5em);
+}
+
+li {
+  @extend %marginStyle;
+
+  >ul {
+    @extend %nestedListsStyle;
+  }
+
+  >ol {
+    @extend %nestedListsStyle;
+  }
+
+}
+
+%quoteEmphasisStyle {
+  font-style: italic;
+}
+
+%attentionStyle {
+  font-weight: bold;
+}
+
+%highlightedStyle {
+  $highlighted-color: $red;
+
+  color: $highlighted-color;
+}
+
+pre {
+  @extend %marginStyle;
+  @extend %monoStyle;
+  @extend %highlightedStyle;
+  @include tx-force-wrap;
+  overflow: hidden;
+  padding: 0 1.5em;
+}
+
+code {
+  @extend %monoStyle;
+  @extend %highlightedStyle;
+}
+
+samp {
+  @extend %monoStyle;
+  @extend %highlightedStyle;
+}
+
+var {
+  @extend %monoStyle;
+  @extend %highlightedStyle;
+  @extend %attentionStyle;
+  font-style: normal;
+}
+
+tt {
+  @extend %monoStyle;
+}
+
+strong {
+  @extend %attentionStyle;
+}
+
+b {
+  @extend %attentionStyle;
+}
+
+%quotesStyle {
   quotes: none;
 
-  &:before, &:after {
-    content: "";
+  &:before,
+  &:after {
     content: none;
   }
 
 }
 
-img {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  outline: none;
-  text-decoration: none;
-  -ms-interpolation-mode: bicubic;
+blockquote {
+  @extend %quoteEmphasisStyle;
+  @extend %quotesStyle;
+  @include tx-rhythm(1, 1, $mrgt: 3em, $mlft: 3em);
 }
 
-caption, th, td {
-  border-collapse: collapse !important;
-  font-weight: normal;
-  word-break: break-word;
-  hyphens: manual;
+em {
+  @extend %quoteEmphasisStyle;
+}
+
+cite {
+  @extend %quoteEmphasisStyle;
+}
+
+q {
+  @extend %quoteEmphasisStyle;
+  @extend %quotesStyle;
+}
+
+i {
+  @extend %quoteEmphasisStyle;
+}
+
+%interactiveStyle {
+  text-decoration: none;
+  cursor: help;
+}
+
+%interactiveHighlightStyle {
+  $interactiveHighlight-color: $blue;
+
+  border-bottom: 1px dotted $interactiveHighlight-color;
+  color: $interactiveHighlight-color;
+}
+
+%removedStyle {
+  text-decoration: line-through;
+}
+
+%acronymAbbrStyle {
+  margin: 0 -.075em 0 0;
+  letter-spacing: .075em;
+}
+
+address {
+  @extend %marginStyle;
+  font-style: normal;
+}
+
+dfn {
+  @extend %attentionStyle;
+}
+
+acronym {
+  @extend %attentionStyle;
+  @extend %interactiveStyle;
+  @extend %interactiveHighlightStyle;
+  @extend %acronymAbbrStyle;
+}
+
+abbr {
+  @extend %attentionStyle;
+  @extend %interactiveStyle;
+  @extend %interactiveHighlightStyle;
+  @extend %acronymAbbrStyle;
+}
+
+ins {
+  @extend %interactiveStyle;
+  @extend %interactiveHighlightStyle;
+}
+
+mark {
+  @extend %interactiveHighlightStyle;
+}
+
+del {
+  $del-color: $gray;
+  $del-borderWidth: 1px;
+
+  @extend %removedStyle;
+  border-bottom: $del-borderWidth dotted $del-color;
+  color: $del-color;
+}
+
+strike {
+  @extend %removedStyle;
+}
+
+s {
+  @extend %removedStyle;
+}
+
+kbd {
+  $kbd-bg: $gray;
+
+  @extend %attentionStyle;
+  @include tx-inline-block;
+  @include tx-grid-height(1);
+  padding: 0 .5em;
+  border-radius: 3px;
+  background: $kbd-bg;
+  background-clip: padding-box;
+  font-weight: bold;
+  font-family: $font-mono;
+  letter-spacing: .1em;
+  vertical-align: top;
+}
+
+%supSubStyle {
+  @include tx-font-size($fontSizeSmall, 0);
+  position: relative;
+}
+
+sup {
+  @extend %supSubStyle;
+  top: -.65em;
+}
+
+sub {
+  @extend %supSubStyle;
+  bottom: -.25em;
+}
+
+big {
+  @include tx-font-size($fontSizeLarge, 0);
+}
+
+small {
+  @include tx-font-size($fontSizeSmall, 0);
+}
+
+u {
+  text-decoration: underline;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+  border: 0;
+  vertical-align: top;
+}
+
+audio {
+  @extend %marginStyle;
+}
+
+video {
+  @extend %marginStyle;
+}
+
+caption {
+  @include tx-rhythm-padding(0, .5);
+  font-weight: bold;
+  text-align: left;
+}
+
+%tableCellStyle {
+  $tableCell-borderColor: $gray;
+
+  @include tx-table-borders(1px, 1, $bcolor: $tableCell-borderColor, $prgt: ($gap / 2), $plft: ($gap / 2));
 }
 
 table {
-  -premailer-width: 100%;
+  @extend %marginStyle;
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
+  -premailer-width: 100%;
   -premailer-cellpadding: 0;
   -premailer-cellspacing: 0;
 }
 
+td {
+  @extend %tableCellStyle;
+}
+
 th {
-  font-weight: bold;
+  @extend %attentionStyle;
+  @extend %tableCellStyle;
   text-align: left;
+}
+
+fieldset {
+  display: block;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+legend {
+  $legend-padding: 1.5em;
+
+  position: relative;
+  left: -$legend-padding;
+  padding: 0 $legend-padding;
+  font-weight: bold;
+}
+
+hr {
+  $hr-borderColor: $black;
+
+  @include tx-rhythm(1, 1);
+  display: block;
+  height: 0;
+  padding: 0;
+  border-top: 1px solid $hr-borderColor;
 }
 
 
@@ -65,6 +453,7 @@ th {
 body {
   width: 100% !important;
   min-width: 100%;
+  margin: 0;
 }
 
 center {
@@ -88,7 +477,11 @@ center {
   width: 100%;
   line-height: 100%;
 
-  div, span, p, font, td {
+  div,
+  span,
+  p,
+  font,
+  td {
     line-height: 100%;
   }
 
