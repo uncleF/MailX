@@ -101,7 +101,7 @@ module.exports = function(grunt) {
       },
       generateCSS: {
         cwd: project.res.css.sass,
-        src: ['**/*.scss', '**/*.sass'],
+        src: ['**/*.{scss,sass}', '!**/tx/*.{scss,sass}'],
         dest: project.res.css.devDir,
         ext: '.css',
         expand: true
