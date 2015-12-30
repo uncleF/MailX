@@ -43,13 +43,16 @@ linters:
     enabled: true
 
   IdSelector:
-    enabled: true
+    enabled: false
 
   IdWithExtraneousSelector:
     enabled: true
 
   ImportantRule:
-    enabled: false
+      enabled: false
+
+  ImportPath
+    leading_underscore: true
 
   Indentation:
     enabled: true
@@ -256,9 +259,11 @@ linters:
       - empty-cells
       - visibility
       - opacity
+      - -ms-interpolation-mode
       - filter
       - cursor
       - pointer-events
+      - touch-action
       - nav-index
       - nav-up
       - nav-right

@@ -1,24 +1,11 @@
-@import 'project/project';
+@import 'project/_project';
 
-
-
-// Letter
+@import 'tx/_tx';
+@import 'tx/_tx-debugMixins';
 
 
 
 /* Baseline Styles, Typography & Rhythm */
-
-html {
-  @include tx-baseline;
-  text-size-adjust: 100%;
-}
-
-body {
-  @include tx-hyphens;
-  color: $text;
-  font-family: $font-sans;
-  font-feature-settings: 'liga';
-}
 
 %HTML5BlocksStyle {
   display: block;
@@ -395,9 +382,7 @@ caption {
 }
 
 %tableCellStyle {
-  $tableCell-borderColor: $gray;
-
-  @include tx-table-borders(1px, 1, $bcolor: $tableCell-borderColor, $prgt: ($gap / 2), $plft: ($gap / 2));
+  border: 0;
 }
 
 table {
@@ -450,15 +435,33 @@ hr {
 
 /* Layout Base */
 
-body {
+%layout {
   width: 100% !important;
   min-width: 100%;
   margin: 0;
 }
 
+html {
+  @extend %layout;
+}
+
+body {
+  @extend %layout;
+}
+
+.letter {
+  @include tx-baseline;
+  @include tx-hyphens;
+  width: 100% !important;
+  min-width: 100%;
+  color: $text;
+  font-family: $font-sans;
+  font-feature-settings: 'liga';
+}
+
 center {
   width: 100%;
-  min-width: 580px;
+  min-width: $content-width;
 }
 
 

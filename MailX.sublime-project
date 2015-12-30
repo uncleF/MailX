@@ -17,11 +17,11 @@
     }, {
       "follow_symlinks": true,
       "name": "MailX: HTML",
-      "path": "dev/templates"
+      "path": "dev/res/templates"
     }, {
       "follow_symlinks": true,
       "name": "MailX: Sass",
-      "path": "dev/res/sass-dev"
+      "path": "dev/res/sass"
     }
   ]
 }
