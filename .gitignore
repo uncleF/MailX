@@ -1,17 +1,27 @@
+.gitconfig.local
+
+.DS_Store
+._*.*
+.Spotlight-V100
+.Trashes
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+
+#Dev
+
 .sass-cache
 .tmp
 node_modules
 bower_components
+npm-debug.log
+
+#TX
 
 build
 letter
 design
 tests
 
-*.zip
+*.letter.zip
 *.sublime-workspace
-
-.DS_Store
-._*.*
-Desktop.ini
-Thumbs.db
