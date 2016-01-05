@@ -74,42 +74,42 @@ summary {
 
 h1 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 2);
+  @include tx-rhythm(1, 2, $px: true);
   @include tx-font-size($h1-fontSize, 3);
 }
 
 h2 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   @include tx-font-size($h2-fontSize, 2);
 }
 
 h3 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   @include tx-font-size($h3-fontSize, 1);
 }
 
 h4 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   @include tx-font-size($h4-fontSize, 1);
 }
 
 h5 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   @include tx-font-size($h5-fontSize, 1);
 }
 
 h6 {
   @extend %headerStyle;
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   @include tx-font-size($h6-fontSize, 1);
 }
 
 %marginStyle {
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
 }
 
 %monoStyle {
@@ -126,12 +126,12 @@ dl {
 }
 
 dt {
-  @include tx-rhythm(1);
+  @include tx-rhythm(1, $px: true);
   font-weight: bold;
 }
 
 dd {
-  @include tx-rhythm(0, 1, $mlft: 1.5em);
+  @include tx-rhythm(0, 1, $mlft: 1.5em, $px: true);
   font-style: italic;
 }
 
@@ -146,7 +146,7 @@ ol {
 }
 
 %nestedListsStyle {
-  @include tx-rhythm(1, 1, $mlft: 1.5em);
+  @include tx-rhythm(1, 1, $mlft: 1.5em, $px: true);
 }
 
 li {
@@ -180,7 +180,6 @@ pre {
   @extend %marginStyle;
   @extend %monoStyle;
   @extend %highlightedStyle;
-  @include tx-force-wrap;
   overflow: hidden;
   padding: 0 1.5em;
 }
@@ -227,7 +226,7 @@ b {
 blockquote {
   @extend %quoteEmphasisStyle;
   @extend %quotesStyle;
-  @include tx-rhythm(1, 1, $mrgt: 3em, $mlft: 3em);
+  @include tx-rhythm(1, 1, $mrgt: 3em, $mlft: 3em, $px: true);
 }
 
 em {
@@ -376,7 +375,7 @@ video {
 }
 
 caption {
-  @include tx-rhythm-padding(0, .5);
+  @include tx-rhythm-padding(0, .5, $px: true);
   font-weight: bold;
   text-align: left;
 }
@@ -424,7 +423,7 @@ legend {
 hr {
   $hr-borderColor: $black;
 
-  @include tx-rhythm(1, 1);
+  @include tx-rhythm(1, 1, $px: true);
   display: block;
   height: 0;
   padding: 0;
