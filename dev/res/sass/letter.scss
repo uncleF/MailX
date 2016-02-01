@@ -4,6 +4,11 @@
 
 /* Baseline Styles, Typography & Rhythm */
 
+* {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: none;
+}
+
 %HTML5BlocksStyle {
   display: block;
 }
@@ -458,6 +463,10 @@ body {
 center {
   width: 100%;
   min-width: $content-width;
+}
+
+.aboveFold {
+  display: none;
 }
 
 
