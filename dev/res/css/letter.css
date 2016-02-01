@@ -13,10 +13,9 @@ h1 {
 
 h1 {
   margin: 24px 0 48px;
-  font-size: 32px;
-  font-size: 2rem;
-  line-height: 72px;
-  line-height: 4.5rem;
+  font-size: 39.81312px;
+  font-size: 2.48832rem;
+  line-height: 1.20563;
 }
 
 table {
@@ -50,8 +49,7 @@ html, body {
   -webkit-font-feature-settings: "liga";
   -moz-font-feature-settings: "liga";
   font-feature-settings: "liga";
-  line-height: 24px;
-  line-height: 1.5rem;
+  line-height: 1.5;
   -epub-hyphens: manual;
   -webkit-hyphens: manual;
   -moz-hyphens: manual;

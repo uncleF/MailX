@@ -1,8 +1,5 @@
 @import 'project/_project';
 
-@import 'tx/_tx';
-@import 'tx/_tx-debugMixins';
-
 
 
 /* Baseline Styles, Typography & Rhythm */
@@ -75,37 +72,37 @@ summary {
 h1 {
   @extend %headerStyle;
   @include tx-rhythm(1, 2, $px: true);
-  @include tx-font-size($h1-fontSize, 3);
+  @include tx-font-size(h1);
 }
 
 h2 {
   @extend %headerStyle;
   @include tx-rhythm(1, 1, $px: true);
-  @include tx-font-size($h2-fontSize, 2);
+  @include tx-font-size(h2);
 }
 
 h3 {
   @extend %headerStyle;
   @include tx-rhythm(1, 1, $px: true);
-  @include tx-font-size($h3-fontSize, 1);
+  @include tx-font-size(h3);
 }
 
 h4 {
   @extend %headerStyle;
   @include tx-rhythm(1, 1, $px: true);
-  @include tx-font-size($h4-fontSize, 1);
+  @include tx-font-size(h4);
 }
 
 h5 {
   @extend %headerStyle;
   @include tx-rhythm(1, 1, $px: true);
-  @include tx-font-size($h5-fontSize, 1);
+  @include tx-font-size(h5);
 }
 
 h6 {
   @extend %headerStyle;
   @include tx-rhythm(1, 1, $px: true);
-  @include tx-font-size($h6-fontSize, 1);
+  @include tx-font-size(h6);
 }
 
 %marginStyle {
@@ -333,7 +330,7 @@ kbd {
 }
 
 %supSubStyle {
-  @include tx-font-size($fontSizeSmall, 0);
+  @include tx-font-size(small, 0);
   position: relative;
 }
 
@@ -348,11 +345,11 @@ sub {
 }
 
 big {
-  @include tx-font-size($fontSizeLarge, 0);
+  @include tx-font-size(large, 0);
 }
 
 small {
-  @include tx-font-size($fontSizeSmall, 0);
+  @include tx-font-size(small, 0);
 }
 
 u {
