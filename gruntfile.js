@@ -368,6 +368,14 @@ module.exports = function(grunt) {
       res: [project.res.css.dir],
       build: [project.build.dir, project.letter.dir]
     },
+    cleanempty: {
+      options: {
+        noJunk: true
+      },
+      build: {
+        src: [project.build.dir + '**/*', project.letter.dir + '**/*']
+      }
+    },
     copy: {
       build: {
         cwd: project.dir,
@@ -448,6 +456,14 @@ module.exports = function(grunt) {
     });
   });
 
+  grunt.registerTask('reminder', 'Reminder', function() {
+    var list = grunt.file.readJSON('.reminderrc').reminders;
+    grunt.log.writeln('\nDon\'t Forget to Check:'['magenta']);
+    list.forEach(function(value) {
+      grunt.log.writeln('✔'['green'] + ' ' + value);
+    });
+  });
+
   grunt.registerTask('quality', [
     'htmlhint',
     'scsslint',
@@ -456,6 +472,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('test', [
+    'quality',
     'mailgun'
   ]);
 
@@ -502,7 +519,9 @@ module.exports = function(grunt) {
     'htmlmin:letterClenup',
     'inlineStyles',
     'copy:letter',
-    'compress:letter'
+    'compress:letter',
+    'cleanempty:build',
+    'reminder'
   ]);
 
 };
