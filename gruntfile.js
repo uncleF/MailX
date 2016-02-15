@@ -5,6 +5,7 @@ var PROJECT           = 'MailX';         // Project Name
 var DEVELOPMENT_DIR   = 'dev';           // Development
 var BUILD_DIR         = 'build';         // Build
 var LETTER_DIR        = 'letter';        // Letter
+var TESTS_DIR         = 'tests';          // Tests
 var IMAGES_DIR        = 'images';        // Content Images
 var RESOURCES_DIR     = 'res';           // Resources (CSS, Images, etc.)
 var TEMPLATES_DIR     = 'templates';     // Templates
@@ -27,6 +28,7 @@ module.exports = function(grunt) {
       var config = {
         name: PROJECT,
         dir: developmentDirCompiled,
+        tests: TESTS_DIR + '/',
         images: developmentDirCompiled + IMAGES_DIR + '/',
         page: LETTER_PAGE,
         res: {
@@ -91,6 +93,29 @@ module.exports = function(grunt) {
         cwd: project.res.css.dir,
         src: ['*.css'],
         expand: true
+      }
+    },
+
+    backstop: {
+      options: {
+        'backstop_path': 'node_modules/backstopjs',
+        'test_path': project.tests + 'backstop'
+      },
+      test: {
+        options: {
+          setup: false,
+          configure: false,
+          'create_references': false,
+          'run_tests': true
+        }
+      },
+      ref: {
+        options: {
+          setup: false,
+          configure: false,
+          'create_references': true,
+          'run_tests': false
+        }
       }
     },
 
@@ -427,13 +452,6 @@ module.exports = function(grunt) {
         },
         files: [project.dir + '**/*.{html,png,jpg,gif,svg}', project.res.css.dir + '**/*.css']
       }
-    },
-    concurrent: {
-      options: {
-        logConcurrentOutput: true,
-        limit: 4
-      },
-      projectWatch: ['watch:html', 'watch:images', 'watch:sass', 'watch:livereload']
     }
 
   });
@@ -475,6 +493,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'quality',
+    'backstop:test',
     'mailgun'
   ]);
 
@@ -498,7 +517,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('watch-project', [
-    'concurrent'
+    'watch'
   ]);
 
   grunt.registerTask('compile', [

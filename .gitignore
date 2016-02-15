@@ -15,14 +15,13 @@ npm-debug.log
 .tmp
 node_modules
 bower_components
-npm-debug.log
+backstop
 
 #TX
 
 build
 letter
 design
-tests
 
 *.template.zip
 *.sublime-workspace
