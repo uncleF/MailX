@@ -11,6 +11,7 @@
     "grunt-backstop": "*",
     "grunt-cleanempty": "*",
     "grunt-colorguard": "*",
+    "grunt-concurrent": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-compress": "*",
     "grunt-contrib-copy": "*",

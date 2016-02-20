@@ -452,6 +452,13 @@ module.exports = function(grunt) {
         },
         files: [project.dir + '**/*.{html,png,jpg,gif,svg}', project.res.css.dir + '**/*.css']
       }
+    },
+    concurrent: {
+      options: {
+        logConcurrentOutput: true,
+        limit: 4
+      },
+      projectWatch: ['watch:html', 'watch:images', 'watch:sass', 'watch:livereload']
     }
 
   });
@@ -472,16 +479,6 @@ module.exports = function(grunt) {
         grunt.file.write(path, file);
       }
     });
-  });
-
-  grunt.registerTask('reminder', 'Reminder', function() {
-    var list = grunt.file.readJSON('.reminderrc').reminders;
-    if (list.length > 0) {
-      grunt.log.writeln('\nDon\'t Forget to Check:'['magenta']);
-      list.forEach(function(value) {
-        grunt.log.writeln('✔'['green'] + ' ' + value);
-      });
-    }
   });
 
   grunt.registerTask('quality', [
@@ -517,7 +514,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('watch-project', [
-    'watch'
+    'concurrent'
   ]);
 
   grunt.registerTask('compile', [
@@ -541,8 +538,7 @@ module.exports = function(grunt) {
     'inlineStyles',
     'copy:letter',
     'compress:letter',
-    'cleanempty:build',
-    'reminder'
+    'cleanempty:build'
   ]);
 
 };
