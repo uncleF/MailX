@@ -51,7 +51,7 @@ linters:
   ImportantRule:
       enabled: false
 
-  ImportPath
+  ImportPath:
     leading_underscore: true
 
   Indentation:
