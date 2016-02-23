@@ -49,7 +49,7 @@ linters:
     enabled: true
 
   ImportantRule:
-      enabled: false
+    enabled: false
 
   ImportPath:
     leading_underscore: true
@@ -109,6 +109,15 @@ linters:
       - overflow
       - overflow-x
       - overflow-y
+      - -webkit-overflow-scrolling
+      - -ms-scroll-snap-points-y
+      - -ms-scroll-snap-points-x
+      - scroll-snap-points-y
+      - scroll-snap-points-x
+      - -ms-scroll-snap-type
+      - scroll-snap-type
+      - -ms-scroll-snap-destination
+      - scroll-snap-destination
       - clip
       - box-sizing
       - box-decoration-break
@@ -304,7 +313,7 @@ linters:
 
   PropertySpelling:
     enabled: true
-    extra_properties: ["appearance", "text-size-adjust", "stroke", "stroke-width", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "fill", "vector-effect", "mask", "clip-path", "-premailer-width", "-premailer-cellpadding", "-premailer-cellspacing"]
+    extra_properties: ["appearance", "text-size-adjust", "stroke", "stroke-width", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "fill", "vector-effect", "mask", "clip-path", "-premailer-width", "-premailer-cellpadding", "-premailer-cellspacing", "scroll-snap-points-y", "scroll-snap-points-x", "scroll-snap-type", "scroll-snap-destination"]
 
   QualifyingElement:
     enabled: true

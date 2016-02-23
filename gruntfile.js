@@ -481,6 +481,16 @@ module.exports = function(grunt) {
     });
   });
 
+  grunt.registerTask('reminder', 'Reminder', function() {
+    var list = grunt.file.readJSON('reminders.json').reminders;
+    if (list.length > 0) {
+      grunt.log.writeln('\nDon\'t Forget to Check:'['magenta']);
+      list.forEach(function(value) {
+        grunt.log.writeln('✔'['green'] + ' ' + value);
+      });
+    }
+  });
+
   grunt.registerTask('quality', [
     'htmlhint',
     'scsslint',
@@ -538,7 +548,8 @@ module.exports = function(grunt) {
     'inlineStyles',
     'copy:letter',
     'compress:letter',
-    'cleanempty:build'
+    'cleanempty:build',
+    'reminder'
   ]);
 
 };
