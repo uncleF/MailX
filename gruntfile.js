@@ -426,6 +426,7 @@ module.exports = function(grunt) {
         cwd: project.letter.dir,
         src: ['**'],
         dest: '.',
+        extDot: 'last',
         expand: true
       }
     },
